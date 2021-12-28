@@ -1,10 +1,18 @@
 import "./App.css";
 
 function Header(props) {
+  console.log(props.onChangeMode);
+  function onClickHandler(evt) {
+    evt.preventDefault(); // 페이지 전환 X
+    props.onChangeMode(); // 한번만 실행하면 다른 함수까지 모두 실행시켜준다.
+  }
+
   return (
     <header>
       <h1>
-        <a href="index.html">{props.title}</a>
+        <a href="index.html" onClick={onClickHandler}>
+          {props.title}
+        </a>
       </h1>
     </header>
   );
@@ -12,12 +20,20 @@ function Header(props) {
 
 function Nav(props) {
   let lis = [];
+  console.log(props.onChangeMode);
+
+  function clickHandler(evt) {
+    evt.preventDefault();
+    props.onChangeMode();
+  }
 
   for (let i = 0; i < props.data.length; i++) {
     let d = props.data[i];
     lis.push(
       <li key={d.id}>
-        <a href={"/read/" + d.id}>{d.title}</a>
+        <a href={"/read/" + d.id} onClick={clickHandler}>
+          {d.title}
+        </a>
       </li>
     );
   }
@@ -43,11 +59,24 @@ function App() {
     { id: 3, title: "js", body: "js is ..." },
   ];
 
+  function onChangeModeHandler() {
+    alert("change!");
+  }
+
+  function onChangeModeHandler2() {
+    alert("change2!");
+  }
+
+  function onChangeNavModeHandler() {
+    alert("changeNav!");
+  }
+
   return (
     // div태그 대신 <> 익명태그도 사용 가능
     <div className="App">
-      <Header title="Web"></Header>
-      <Nav data={topics} />
+      <Header title="Web" onChangeMode={onChangeModeHandler} />
+      <Header title="Web" onChangeMode={onChangeModeHandler2} />
+      <Nav data={topics} onChangeMode={onChangeNavModeHandler} />
       <Article title="Welcome" body="Hello react.js"></Article>
     </div>
   );
