@@ -10,26 +10,25 @@ function Header(props) {
   );
 }
 
-function Nav() {
+function Nav(props) {
+  let lis = [];
+
+  for (let i = 0; i < props.data.length; i++) {
+    let d = props.data[i];
+    lis.push(
+      <li key={d.id}>
+        <a href={"/read/" + d.id}>{d.title}</a>
+      </li>
+    );
+  }
   return (
     <nav>
-      <ol>
-        <li>
-          <a href="1.html">html</a>
-        </li>
-        <li>
-          <a href="2.html">css</a>
-        </li>
-        <li>
-          <a href="3.html">js</a>
-        </li>
-      </ol>
+      <ol>{lis}</ol>
     </nav>
   );
 }
 
 function Article(props) {
-  console.log(props);
   return (
     <article>
       <h2>{props.title}</h2>
@@ -38,11 +37,17 @@ function Article(props) {
   );
 }
 function App() {
+  let topics = [
+    { id: 1, title: "html", body: "html is ..." },
+    { id: 2, title: "css", body: "css is ..." },
+    { id: 3, title: "js", body: "js is ..." },
+  ];
+
   return (
     // div태그 대신 <> 익명태그도 사용 가능
     <div className="App">
       <Header title="Web"></Header>
-      <Nav></Nav>
+      <Nav data={topics} />
       <Article title="Welcome" body="Hello react.js"></Article>
     </div>
   );
