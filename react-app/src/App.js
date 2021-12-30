@@ -19,27 +19,39 @@ function Header(props) {
 }
 
 function Nav(props) {
-  let lis = [];
   console.log(props.onChangeMode);
 
   function clickHandler(evt) {
     evt.preventDefault();
     props.onChangeMode();
   }
+  console.log(props.data);
+  // let lis = [];
+  // for (let i = 0; i < props.data.length; i++) {
+  //   let d = props.data[i];
+  //   lis.push(
+  //     <li key={d.id}>
+  //       <a href={"/read/" + d.id} onClick={clickHandler}>
+  //         {d.title}
+  //       </a>
+  //     </li>
+  //   );
+  // }
 
-  for (let i = 0; i < props.data.length; i++) {
-    let d = props.data[i];
-    lis.push(
-      <li key={d.id}>
-        <a href={"/read/" + d.id} onClick={clickHandler}>
-          {d.title}
+  // for => map 리팩토링
+  let liTag = props.data.map((li, index) => {
+    return (
+      <li key={li.id}>
+        <a href={"/read/" + li.id} onClick={clickHandler}>
+          {li.title}
         </a>
       </li>
     );
-  }
+  });
+
   return (
     <nav>
-      <ol>{lis}</ol>
+      <ol>{liTag}</ol>
     </nav>
   );
 }
