@@ -52,15 +52,16 @@ function App() {
   // let mode = _mode[0];
   // let setMode = _mode[1];
   // 위 내용과 같다.
-  let [mode, setMode] = useState("WELCOME");
+  const [mode, setMode] = useState("WELCOME");
 
   let topics = [
     { id: 1, title: "html", body: "html is ..." },
     { id: 2, title: "css", body: "css is ..." },
     { id: 3, title: "js", body: "js is ..." },
   ];
-  function ChangeModeHandler(_mode) {
+  function ChangeModeHandler(_mode, _id) {
     setMode(_mode);
+    setMode(_id);
   }
 
   let articleTag;
@@ -76,7 +77,27 @@ function App() {
       <Header title="WEB" onChangeMode={ChangeModeHandler} />
       <Nav data={topics} onChangeMode={ChangeModeHandler} />
       {articleTag}
+      <Control onChangeMode={ChangeModeHandler} />
     </>
+  );
+}
+
+function Control(props) {
+  function ClickHandler(evt) {
+    evt.preventDefault();
+    props.onChangeMode("CREATE");
+  }
+
+  return (
+    <ul>
+      <li>
+        <button>
+          <a href="/create" onClick={ClickHandler}>
+            create
+          </a>
+        </button>
+      </li>
+    </ul>
   );
 }
 
